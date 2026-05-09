@@ -93,6 +93,7 @@ export default function TeacherPage() {
                 <tr>
                   <th>ID</th>
                   <th>Nama Siswa</th>
+                  <th>Sekolah</th>
                   <th>Mata Pelajaran</th>
                   <th>Nilai</th>
                   <th>Waktu Selesai</th>
@@ -101,13 +102,14 @@ export default function TeacherPage() {
               <tbody>
                 {scores.length === 0 ? (
                   <tr>
-                    <td colSpan="5" style={{ textAlign: 'center', color: '#8b949e' }}>Belum ada data nilai.</td>
+                    <td colSpan="6" style={{ textAlign: 'center', color: '#8b949e' }}>Belum ada data nilai.</td>
                   </tr>
                 ) : (
                   scores.map((item) => (
                     <tr key={item.id}>
                       <td>{item.id}</td>
                       <td style={{ fontWeight: 600 }}>{item.name}</td>
+                      <td>{item.school || 'SDN 01 KALISALAK'}</td>
                       <td>{item.subject}</td>
                       <td style={{ fontWeight: 700, color: 'var(--accent-color)' }}>{item.score}</td>
                       <td style={{ fontSize: '0.85rem', color: '#8b949e' }}>{item.date}</td>

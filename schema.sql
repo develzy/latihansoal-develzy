@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS scores (
   name TEXT,
   subject TEXT,
   score INTEGER,
-  date TEXT
+  date TEXT,
+  school TEXT
 );

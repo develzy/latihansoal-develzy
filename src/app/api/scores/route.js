@@ -3,21 +3,38 @@ export const runtime = 'edge';
 // Memori sementara untuk simulasi lokal (akan reset jika server restart)
 let localScores = [];
 
+const schoolPasswords = {
+  'Guruberprestasi25': 'SDN 01 KALISALAK',
+  'GuruUmum25': 'Umum'
+};
+
 // GET /api/scores
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const pass = searchParams.get('pass');
 
-  if (pass !== 'Guruberprestasi25') {
+  const school = schoolPasswords[pass];
+  if (!school) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
   }
 
   try {
     const db = process.env.DB;
     if (!db) {
-      return Response.json(localScores);
+      const filtered = school === 'Umum' 
+        ? localScores.filter(s => s.school !== 'SDN 01 KALISALAK')
+        : localScores.filter(s => s.school === school);
+      return Response.json(filtered);
     }
-    const { results } = await db.prepare("SELECT * FROM scores ORDER BY id DESC").all();
+    
+    let results;
+    if (school === 'Umum') {
+      const query = await db.prepare("SELECT * FROM scores WHERE school != 'SDN 01 KALISALAK' OR school IS NULL ORDER BY id DESC").all();
+      results = query.results;
+    } else {
+      const query = await db.prepare("SELECT * FROM scores WHERE school = ? ORDER BY id DESC").all(school);
+      results = query.results;
+    }
     return Response.json(results);
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
@@ -28,7 +45,7 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { name, subject, pgScore, essayData } = body;
+    const { name, subject, pgScore, essayData, school } = body;
     const date = new Date().toLocaleString('id-ID');
 
     let essayScore = 0;
@@ -100,6 +117,7 @@ export async function POST(request) {
         subject,
         score: finalScore,
         date,
+        school: school || 'SDN 01 KALISALAK',
         isMock: true
       };
       localScores.unshift(newScore);
@@ -107,8 +125,8 @@ export async function POST(request) {
     }
 
     await db.prepare(
-      "INSERT INTO scores (name, subject, score, date) VALUES (?, ?, ?, ?)"
-    ).bind(name, subject, finalScore, date).run();
+      "INSERT INTO scores (name, subject, score, date, school) VALUES (?, ?, ?, ?, ?)"
+    ).bind(name, subject, finalScore, date, school || 'SDN 01 KALISALAK').run();
 
     return Response.json({ success: true, finalScore });
   } catch (error) {
