@@ -371,6 +371,8 @@ export default function Home() {
         <div className={styles.marqueeInner}>
           <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG SDN 01 KALISALAK</span>
           <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG SDN 01 KALISALAK</span>
+          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG SDN 01 KALISALAK</span>
+          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG SDN 01 KALISALAK</span>
         </div>
       </div>
 
@@ -632,14 +634,21 @@ export default function Home() {
       )}
       <footer className={styles.footer}>
         <div className={styles.footerLine}></div>
-        <p>Asah Kemampuan, Raih Prestasi</p>
-        <p style={{ fontSize: '0.8rem', marginTop: '0.2rem', opacity: 0.7 }}>@2026 Powered by DEVELZY</p>
-        <div style={{ fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.7, display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
-          <span>Versi 2.0 | Mode Cerdas</span>
-          <span>|</span>
-          <a href="/teacher" style={{ color: 'var(--accent-color)', textDecoration: 'none', fontWeight: 'bold' }}>Panel Guru</a>
+        <div className={styles.footerContent}>
+          <h3 className={styles.footerTitle}>Asah Kemampuan, Raih Prestasi</h3>
+          <p className={styles.footerQuote}>
+            &quot;Kami Selalu Tumbuh Bersama Inovasi dan Prestasi, menciptakan lingkungan belajar yang modern, inspiratif, dan penuh semangat untuk meraih masa depan gemilang.&quot;
+          </p>
+          <div className={styles.footerMeta}>
+            <p className={styles.copyright}>@2026 Powered by DEVELZY</p>
+            <div className={styles.footerLinks}>
+              <span>Versi 2.0 | Mode Cerdas</span>
+              <span className={styles.divider}>|</span>
+              <a href="/teacher" className={styles.teacherLink}>Panel Guru</a>
+            </div>
+          </div>
         </div>
-      </footer >
+      </footer>
     </div >
   );
 }
