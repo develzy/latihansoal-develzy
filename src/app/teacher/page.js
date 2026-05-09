@@ -17,13 +17,14 @@ export default function TeacherPage() {
     setError('');
     try {
       const res = await fetch(`/api/scores?pass=${password}`);
-      if (res.ok) {
-        const data = await res.json();
-        setScores(data);
-        setIsAuthenticated(true);
-      } else {
-        setError('Password salah atau akses ditolak.');
-      }
+        if (res.ok) {
+          const data = await res.json();
+          setScores(data);
+          setIsAuthenticated(true);
+        } else {
+          const errData = await res.json().catch(() => ({}));
+          setError(errData.error || 'Password salah atau akses ditolak.');
+        }
     } catch (err) {
       setError('Terjadi kesalahan saat memuat data.');
     } finally {
