@@ -93,6 +93,7 @@ export default function UmumPage() {
   const [current, setCurrent] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSchoolDropdownOpen, setIsSchoolDropdownOpen] = useState(false);
+  const [isSchoolSelected, setIsSchoolSelected] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -414,68 +415,110 @@ export default function UmumPage() {
 
       {!started ? (
         <>
-          <div className={styles.card}>
-            <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Data Peserta</h2>
-            
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Pilih Sekolah</label>
-              <input
-                type="text"
-                list="schools-list"
-                className={styles.input}
-                value={student.school}
-                onChange={(e) => setStudent({ ...student, school: e.target.value })}
-                placeholder="Ketik atau pilih sekolah"
-              />
-              <datalist id="schools-list">
-                {schools.map((sch, i) => (
-                  <option key={i} value={sch} />
-                ))}
-              </datalist>
-            </div>
+          {!isSchoolSelected ? (
+            <div className={styles.card}>
+              <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Pilih Sekolah</h2>
+              
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Pilih Sekolah Anda</label>
+                <input
+                  type="text"
+                  list="schools-list"
+                  className={styles.input}
+                  value={student.school}
+                  onChange={(e) => setStudent({ ...student, school: e.target.value })}
+                  placeholder="Ketik atau pilih sekolah"
+                />
+                <datalist id="schools-list">
+                  {schools.map((sch, i) => (
+                    <option key={i} value={sch} />
+                  ))}
+                </datalist>
+              </div>
 
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Nama Lengkap</label>
-              <input
-                type="text"
-                className={styles.input}
-                value={student.name}
-                onChange={(e) => setStudent({ ...student, name: e.target.value })}
-                placeholder="Masukkan nama Anda"
-              />
+              {error && <p style={{ color: 'var(--danger-color)', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</p>}
+              <button 
+                className={styles.button} 
+                onClick={() => {
+                  if (!student.school) {
+                    setError('Harap pilih atau ketik sekolah Anda.');
+                    return;
+                  }
+                  setError('');
+                  setIsSchoolSelected(true);
+                  playSound('click');
+                }}
+              >
+                Lanjutkan <ChevronRight size={18} />
+              </button>
             </div>
+          ) : (
+            <div className={styles.card}>
+              <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Data Peserta</h2>
+              
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Sekolah</label>
+                <input
+                  type="text"
+                  className={styles.input}
+                  value={student.school}
+                  disabled
+                  style={{ background: 'rgba(255, 255, 255, 0.05)', color: '#8b949e' }}
+                />
+              </div>
 
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Pilih Mata Pelajaran</label>
-              <div className={styles.dropdown}>
-                <div 
-                  className={styles.dropdownHeader} 
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  <span>{subject ? getSubjectName() : 'Pilih Mata Pelajaran'}</span>
-                  <ChevronDown size={18} className={isDropdownOpen ? styles.rotate : ''} />
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Nama Lengkap</label>
+                <input
+                  type="text"
+                  className={styles.input}
+                  value={student.name}
+                  onChange={(e) => setStudent({ ...student, name: e.target.value })}
+                  placeholder="Masukkan nama Anda"
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Pilih Mata Pelajaran</label>
+                <div className={styles.dropdown}>
+                  <div 
+                    className={styles.dropdownHeader} 
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  >
+                    <span>{subject ? getSubjectName() : 'Pilih Mata Pelajaran'}</span>
+                    <ChevronDown size={18} className={isDropdownOpen ? styles.rotate : ''} />
+                  </div>
+                  {isDropdownOpen && (
+                    <ul className={styles.dropdownList}>
+                      <li onClick={() => { setSubject('pai'); setIsDropdownOpen(false); }}>1. PAI-BP</li>
+                      <li onClick={() => { setSubject('math'); setIsDropdownOpen(false); }}>2. MATEMATIKA</li>
+                      <li onClick={() => { setSubject('indo'); setIsDropdownOpen(false); }}>3. B. INDONESIA</li>
+                      <li onClick={() => { setSubject('ppkn'); setIsDropdownOpen(false); }}>4. PPKN</li>
+                      <li onClick={() => { setSubject('english'); setIsDropdownOpen(false); }}>5. B. INGGRIS</li>
+                      <li onClick={() => { setSubject('jawa'); setIsDropdownOpen(false); }}>6. B. JAWA</li>
+                      <li onClick={() => { setSubject('pjok'); setIsDropdownOpen(false); }}>7. PJOK</li>
+                      <li onClick={() => { setSubject('ipas'); setIsDropdownOpen(false); }}>8. IPAS</li>
+                      <li onClick={() => { setSubject('sbdp'); setIsDropdownOpen(false); }}>9. SBdP</li>
+                    </ul>
+                  )}
                 </div>
-                {isDropdownOpen && (
-                  <ul className={styles.dropdownList}>
-                    <li onClick={() => { setSubject('pai'); setIsDropdownOpen(false); }}>1. PAI-BP</li>
-                    <li onClick={() => { setSubject('math'); setIsDropdownOpen(false); }}>2. MATEMATIKA</li>
-                    <li onClick={() => { setSubject('indo'); setIsDropdownOpen(false); }}>3. B. INDONESIA</li>
-                    <li onClick={() => { setSubject('ppkn'); setIsDropdownOpen(false); }}>4. PPKN</li>
-                    <li onClick={() => { setSubject('english'); setIsDropdownOpen(false); }}>5. B. INGGRIS</li>
-                    <li onClick={() => { setSubject('jawa'); setIsDropdownOpen(false); }}>6. B. JAWA</li>
-                    <li onClick={() => { setSubject('pjok'); setIsDropdownOpen(false); }}>7. PJOK</li>
-                    <li onClick={() => { setSubject('ipas'); setIsDropdownOpen(false); }}>8. IPAS</li>
-                    <li onClick={() => { setSubject('sbdp'); setIsDropdownOpen(false); }}>9. SBdP</li>
-                  </ul>
-                )}
+              </div>
+
+              {error && <p style={{ color: 'var(--danger-color)', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</p>}
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <button 
+                  className={styles.button} 
+                  onClick={() => { setIsSchoolSelected(false); setError(''); playSound('click'); }}
+                  style={{ background: 'rgba(255, 255, 255, 0.1)', color: '#fff', border: '1px solid rgba(255, 255, 255, 0.2)' }}
+                >
+                  Kembali
+                </button>
+                <button className={styles.button} onClick={handleStart}>
+                  Mulai Latihan <ChevronRight size={18} />
+                </button>
               </div>
             </div>
-
-            {error && <p style={{ color: 'var(--danger-color)', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</p>}
-            <button className={styles.button} onClick={handleStart}>
-              Mulai Latihan <ChevronRight size={18} />
-            </button>
-          </div>
+          )}
         </>
       ) : (
         <>
