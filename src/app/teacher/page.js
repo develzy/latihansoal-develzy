@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from '../page.module.css';
-import { ChevronRight, Award, RefreshCw, BookOpen, Lock, Clock, Eye, Send, Trash2 } from 'lucide-react';
+import { ChevronRight, Award, RefreshCw, BookOpen, Lock, Clock, Eye, EyeOff, Send, Trash2 } from 'lucide-react';
 
 export default function TeacherPage() {
   const [password, setPassword] = useState('');
@@ -10,6 +10,7 @@ export default function TeacherPage() {
   const [scores, setScores] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     setLoading(true);
@@ -64,14 +65,32 @@ export default function TeacherPage() {
           <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Login Guru</h2>
           <div className={styles.formGroup}>
             <label className={styles.label}>Password Akses</label>
-            <input
-              type="password"
-              className={styles.input}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Masukkan password"
-              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-            />
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Masukkan password"
+                onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+                style={{ paddingRight: '2.5rem' }}
+              />
+              <div 
+                onClick={() => setShowPassword(!showPassword)}
+                style={{ 
+                  position: 'absolute', 
+                  right: '0.75rem', 
+                  top: '50%', 
+                  transform: 'translateY(-50%)', 
+                  cursor: 'pointer',
+                  color: '#8b949e',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </div>
+            </div>
           </div>
           {error && <p style={{ color: 'var(--danger-color)', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</p>}
           <button className={styles.button} onClick={handleLogin} disabled={loading}>
