@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from '../page.module.css';
-import { ChevronRight, Award, RefreshCw, BookOpen, Lock, Clock, Eye, EyeOff, Send, Trash2 } from 'lucide-react';
+import { ChevronRight, Award, RefreshCw, BookOpen, Lock, Clock, Eye, EyeOff, Send, Trash2, ChevronDown } from 'lucide-react';
 
 export default function TeacherPage() {
   const [password, setPassword] = useState('');
@@ -11,12 +11,62 @@ export default function TeacherPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedSchool, setSelectedSchool] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSchoolDropdownOpen, setIsSchoolDropdownOpen] = useState(false);
+
+  const schools = [
+    'SD Negeri Margasari 01',
+    'SD Negeri Margasari 02',
+    'SD Negeri Margasari 03',
+    'SD Negeri Margasari 04',
+    'SD Negeri Margasari 05',
+    'SD Negeri Margasari 06',
+    'SD Negeri Margasari 07',
+    'SD Negeri Marga Ayu',
+    'SD Negeri Danaraja 01',
+    'SD Negeri Danaraja 02',
+    'SD Negeri Danaraja 03',
+    'SD Negeri Danaraja 04',
+    'SD Negeri Jatilaba 01',
+    'SD Negeri Jatilaba 02',
+    'SD Negeri Jatilaba 03',
+    'SD Negeri Jembayat 01',
+    'SD Negeri Jembayat 02',
+    'SD Negeri Jembayat 03',
+    'SD Negeri Kaligayam 01',
+    'SD Negeri Kaligayam 02',
+    'SD Negeri Kaligayam 03',
+    'SD Negeri Kalisalak 02',
+    'SD Negeri Karangdawa 01',
+    'SD Negeri Karangdawa 02',
+    'SD Negeri Karangdawa 03',
+    'SD Negeri Karangdawa 04',
+    'SD Negeri Pakulaut 01',
+    'SD Negeri Pakulaut 02',
+    'SD Negeri Pakulaut 03',
+    'SD Negeri Pakulaut 04',
+    'SD Negeri Prupuk Selatan 01',
+    'SD Negeri Prupuk Selatan 02',
+    'SD Negeri Prupuk Selatan 03',
+    'SD Negeri Prupuk Utara 01',
+    'SD Negeri Prupuk Utara 02',
+    'SD Negeri Wanasari 01',
+    'SD Negeri Wanasari 02',
+  ];
 
   const handleLogin = async () => {
+    if (password === 'GuruUmum25' && !selectedSchool) {
+      setError('Harap pilih sekolah Anda.');
+      return;
+    }
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`/api/scores?pass=${password}`);
+      const url = password === 'GuruUmum25' 
+        ? `/api/scores?pass=${password}&school=${encodeURIComponent(selectedSchool)}`
+        : `/api/scores?pass=${password}`;
+      const res = await fetch(url);
         if (res.ok) {
           const data = await res.json();
           setScores(data);
@@ -35,7 +85,10 @@ export default function TeacherPage() {
   const refreshData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/scores?pass=${password}`);
+      const url = password === 'GuruUmum25' 
+        ? `/api/scores?pass=${password}&school=${encodeURIComponent(selectedSchool)}`
+        : `/api/scores?pass=${password}`;
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         setScores(data);
@@ -56,7 +109,9 @@ export default function TeacherPage() {
           </div>
           <div className={styles.headerText}>
             <h1 className={styles.title}>Panel Guru</h1>
-            <p className={styles.subtitle}>Rekap Nilai Siswa SDN 01 KALISALAK</p>
+            <p className={styles.subtitle}>
+              Rekap Nilai Siswa {password === 'GuruUmum25' ? (selectedSchool || 'Sekolah Umum') : 'SDN 01 KALISALAK'}
+            </p>
           </div>
         </div>
       </header>
@@ -66,7 +121,7 @@ export default function TeacherPage() {
           <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Login Guru</h2>
           <div className={styles.formGroup}>
             <label className={styles.label}>Password Akses</label>
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: 'relative', marginBottom: '1rem' }}>
               <input
                 type={showPassword ? 'text' : 'password'}
                 className={styles.input}
@@ -93,6 +148,54 @@ export default function TeacherPage() {
               </div>
             </div>
           </div>
+
+            {password === 'GuruUmum25' && (
+              <div className={styles.formGroup} style={{ marginTop: '1rem' }}>
+                <label className={styles.label}>Pilih Sekolah Anda</label>
+                <div className={styles.dropdown}>
+                  <div 
+                    className={styles.dropdownHeader} 
+                    onClick={() => setIsSchoolDropdownOpen(!isSchoolDropdownOpen)}
+                  >
+                    <span>{selectedSchool || 'Pilih Sekolah'}</span>
+                    <ChevronDown size={18} className={isSchoolDropdownOpen ? styles.rotate : ''} />
+                  </div>
+                  {isSchoolDropdownOpen && (
+                    <ul className={styles.dropdownList}>
+                      <li style={{ padding: '0.5rem 1rem', cursor: 'default' }}>
+                        <input
+                          type="text"
+                          className={styles.input}
+                          placeholder="Cari sekolah..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          onClick={(e) => e.stopPropagation()} 
+                          style={{ width: '100%', marginBottom: '0.5rem' }}
+                        />
+                      </li>
+                      {schools
+                        .filter(sch => sch.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .map((sch, i) => (
+                          <li 
+                            key={i} 
+                            onClick={() => { 
+                              setSelectedSchool(sch); 
+                              setIsSchoolDropdownOpen(false); 
+                              setSearchQuery('');
+                            }}
+                          >
+                            {sch}
+                          </li>
+                        ))
+                      }
+                      {schools.filter(sch => sch.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
+                        <li style={{ color: '#8b949e', cursor: 'default' }}>Sekolah tidak ditemukan</li>
+                      )}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            )}
           {error && <p style={{ color: 'var(--danger-color)', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</p>}
           <button className={styles.button} onClick={handleLogin} disabled={loading}>
             {loading ? 'Memuat...' : 'Masuk Panel'} <ChevronRight size={18} />

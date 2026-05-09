@@ -21,16 +21,23 @@ export async function GET(request) {
   try {
     const db = process.env.DB;
     if (!db) {
+      const requestedSchool = searchParams.get('school');
       const filtered = school === 'Umum' 
-        ? localScores.filter(s => s.school !== 'SDN 01 KALISALAK')
+        ? (requestedSchool ? localScores.filter(s => s.school === requestedSchool) : localScores.filter(s => s.school !== 'SDN 01 KALISALAK'))
         : localScores.filter(s => s.school === school);
       return Response.json(filtered);
     }
     
     let results;
+    const requestedSchool = searchParams.get('school');
     if (school === 'Umum') {
-      const query = await db.prepare("SELECT * FROM scores WHERE school != 'SDN 01 KALISALAK' OR school IS NULL ORDER BY id DESC").all();
-      results = query.results;
+      if (requestedSchool) {
+        const query = await db.prepare("SELECT * FROM scores WHERE school = ? ORDER BY id DESC").all(requestedSchool);
+        results = query.results;
+      } else {
+        const query = await db.prepare("SELECT * FROM scores WHERE school != 'SDN 01 KALISALAK' OR school IS NULL ORDER BY id DESC").all();
+        results = query.results;
+      }
     } else {
       const query = await db.prepare("SELECT * FROM scores WHERE school = ? ORDER BY id DESC").all(school);
       results = query.results;
