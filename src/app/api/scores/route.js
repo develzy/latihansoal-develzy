@@ -1,11 +1,7 @@
 export const runtime = 'edge';
 
 // Memori sementara untuk simulasi lokal (akan reset jika server restart)
-let localScores = [
-  { id: 1, name: 'Budi Santoso', subject: 'Matematika', score: 85, date: '09/05/2026, 06:00:00' },
-  { id: 2, name: 'Siti Aminah', subject: 'PPKN', score: 90, date: '09/05/2026, 06:15:00' },
-  { id: 3, name: 'Ahmad Dani', subject: 'B. Indonesia', score: 75, date: '09/05/2026, 06:30:00' },
-];
+let localScores = [];
 
 // GET /api/scores
 export async function GET(request) {
