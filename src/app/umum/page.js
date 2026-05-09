@@ -743,6 +743,8 @@ export default function UmumPage() {
               <span>Versi 1.2.5 | Mode Cerdas | Terintegritas Dengan AI</span>
               <span className={styles.divider}>|</span>
               <a href="/teacher" className={styles.teacherLink}>Ruang Guru</a>
+              <span className={styles.divider}>|</span>
+              <a href="https://wa.me/6285879584257" target="_blank" rel="noopener noreferrer" className={styles.teacherLink}>Mengalami Kendala?</a>
             </div>
           </div>
         </div>
