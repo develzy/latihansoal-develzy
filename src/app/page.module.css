@@ -545,3 +545,34 @@
   .card { padding: 1.5rem; }
   .questionText { font-size: 1.1rem; }
 }
+
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0.75rem 0;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(5px);
+}
+
+.marqueeInner {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+.marqueeInner span {
+  padding: 0 2rem;
+  font-weight: 700;
+  color: #60efff;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

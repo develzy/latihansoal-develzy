@@ -367,6 +367,13 @@ export default function Home() {
         )}
       </header>
 
+      <div className={styles.marquee}>
+        <div className={styles.marqueeInner}>
+          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG SDN 01 KALISALAK</span>
+          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG SDN 01 KALISALAK</span>
+        </div>
+      </div>
+
       {!started ? (
         <>
           <div className={styles.card}>
