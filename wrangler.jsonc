@@ -1,0 +1,15 @@
+{
+  "name": "latihan-soal-asaj",
+  "compatibility_date": "2024-11-01",
+  "pages_build_output_dir": ".next",
+  "vars": {
+    "GEMINI_API_KEY": "AIzaSyD9lObHvnmjZNNKce-ouz1ca660VO3taIE"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "asaj_db",
+      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal ASAJ Matematika</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .option-btn {
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            transform: translateX(4px);
+        }
+
+        .option-btn.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .option-btn.correct {
+            border-color: #16a34a;
+            background: #f0fdf4;
+        }
+
+        .option-btn.wrong {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .progress-fill {
+            transition: width 0.3s ease;
+        }
+    </style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+</head>
+
+<body data-template-id="__page-root" class="w-full min-h-screen">
+    <header class="w-full border-b border-emerald-200 px-4 py-5">
+        <div class="max-w-3xl mx-auto text-center">
+            <h1 data-template-id="main-title" class="canva-text font-bold"></h1>
+            <p data-template-id="subtitle" class="canva-text mt-1"></p>
+        </div>
+    </header>
+    <main class="max-w-3xl mx-auto px-4 py-6">
+        <div id="student-form" class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h2 data-template-id="form-title" class="canva-text font-bold mb-4"></h2>
+            <div class="mb-4"><label data-template-id="label-name" for="student-name"
+                    class="canva-text block mb-1 font-medium"></label> <input id="student-name" type="text"
+                    class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400"
+                    required>
+            </div>
+            <div class="mb-4"><label data-template-id="label-school" for="student-school"
+                    class="canva-text block mb-1 font-medium"></label> <input id="student-school" type="text"
+                    class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400"
+                    required>
+            </div>
+            <p id="form-error" class="text-red-600 text-sm mb-3 hidden">Harap isi nama lengkap dan nama sekolah.</p>
+            <button data-template-id="start-button" class="canva-button w-full px-5 py-3 rounded-lg font-medium"
+                onclick="startQuiz()"></button>
+        </div>
+        <div id="quiz-area" class="hidden">
+            <div class="mb-2 text-sm text-gray-600" id="student-info-display"></div>
+            <div class="mb-4 flex items-center gap-3">
+                <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="progress-fill h-full bg-emerald-500 rounded-full" style="width:2.5%">
+                    </div>
+                </div><span id="progress-text" class="text-sm font-medium text-gray-600">1/40</span>
+            </div>
+            <div id="question-area" class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-4">
+                <p id="question-number" class="text-sm font-medium text-emerald-600 mb-2"></p>
+                <p id="question-text" class="text-lg font-medium text-gray-900 mb-4 leading-relaxed"
+                    style="white-space:pre-line"></p>
+                <div id="options-container"></div><textarea id="essay-input"
+                    class="hidden w-full border border-gray-300 rounded-lg p-3 mt-2 min-h-[120px] focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400"
+                    placeholder="Tulis jawaban kamu di sini..."></textarea>
+                <div id="explanation-panel" class="hidden mt-4 p-4 rounded-lg border-l-4">
+                    <div id="answer-status" class="text-sm font-semibold mb-2"></div>
+                    <div id="explanation-text" class="text-sm text-gray-700 leading-relaxed"></div>
+                </div>
+            </div>
+            <p id="answer-error" class="text-red-600 text-sm mb-3 hidden">Harap jawab soal terlebih dahulu sebelum
+                melanjutkan.</p>
+            <div class="flex justify-end items-center"><button id="next-btn" onclick="navigate()"
+                    class="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-1">Selanjutnya
+                    <i data-lucide="chevron-right" style="width:18px;height:18px"></i></button> <button id="submit-btn"
+                    onclick="submitQuiz()"
+                    class="hidden px-5 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 font-medium">Selesai
+                    &amp; Lihat Nilai</button>
+            </div>
+            <div id="result-panel"
+                class="hidden mt-6 bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center">
+                <h2 data-template-id="result-title" class="canva-text font-bold mb-2"></h2>
+                <p id="score-display" class="text-4xl font-bold text-emerald-600 mb-2"></p>
+                <p id="score-detail" class="text-gray-600 mb-4"></p><button onclick="resetQuiz()"
+                    class="px-5 py-2 rounded-lg border border-emerald-600 text-emerald-600 hover:bg-emerald-50 font-medium">Ulangi
+                    Latihan</button>
+            </div>
+        </div>
+    </main>
+    <footer class="w-full border-t border-gray-200 bg-white mt-12 py-4">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <p data-template-id="footer-text" class="canva-text text-sm text-gray-600"></p>
+        </div>
+    </footer>
+    <script src="/_sdk/editing_sdk.js"></script>
+    <script>
+        const questions = [
+            { q: 'Bilangan 54.327 dibaca ....', o: ['lima puluh empat ribu tiga ratus dua puluh tujuh', 'lima ribu empat ratus tiga puluh dua tujuh', 'lima puluh empat ribu tiga puluh dua tujuh', 'lima ratus empat puluh tiga ribu dua puluh tujuh'], a: 0 },
+            { q: 'Tiga puluh delapan ribu lima ratus enam ditulis ....', o: ['38.056', '38.506', '38.560', '35.806'], a: 1 },
+            { q: 'Nilai tempat angka 7 pada bilangan 47.325 adalah ....', o: ['satuan', 'puluhan', 'ribuan', 'ribu puluhan'], a: 2 },
+            { q: 'Perhatikan bilangan berikut!\n45.321, 54.123, 43.215, 52.134\n\nUrutan dari yang terkecil adalah ....', o: ['43.215, 45.321, 52.134, 54.123', '45.321, 43.215, 52.134, 54.123', '54.123, 52.134, 45.321, 43.215', '43.215, 52.134, 45.321, 54.123'], a: 0 },
+            { q: 'Bentuk komposisi dari 62.543 adalah ....', o: ['60.000 + 2.000 + 500 + 40 + 3', '6.000 + 2.000 + 500 + 40 + 3', '60.000 + 20 + 500 + 40 + 3', '62.000 + 500 + 43'], a: 0 },
+            { q: 'Bentuk dekomposisi dari 84.216 adalah ....', o: ['80.000 + 4.000 + 200 + 10 + 6', '8.000 + 400 + 20 + 16', '84.000 + 216', '80.000 + 42 + 16'], a: 0 },
+            { q: 'Ibu memiliki uang Rp75.000,00. Digunakan membeli buku Rp25.000,00 dan pensil Rp10.000,00. Sisa uang ibu adalah ....', o: ['Rp35.000,00', 'Rp40.000,00', 'Rp45.000,00', 'Rp50.000,00'], a: 1 },
+            { q: 'Hasil dari 23.450 + 15.325 − 8.200 adalah ....', o: ['30.575', '31.575', '32.575', '33.575'], a: 0 },
+            { q: 'Hasil dari 24 × 12 ÷ 6 adalah ....', o: ['24', '36', '48', '72'], a: 2 },
+            { q: 'Tiga lampu berkedip setiap 6 detik, 8 detik, dan 12 detik. Ketiga lampu akan berkedip bersama lagi setiap ....', o: ['12 detik', '18 detik', '24 detik', '48 detik'], a: 2 },
+            { q: 'Pecahan terbesar adalah ....', o: ['1/2', '2/3', '3/4', '4/5'], a: 3 },
+            { q: 'Urutan pecahan dari yang terkecil adalah ....', o: ['1/2, 2/3, 3/4, 4/5', '4/5, 3/4, 2/3, 1/2', '2/3, 1/2, 4/5, 3/4', '3/4, 1/2, 2/3, 4/5'], a: 0 },
+            { q: 'Ani memiliki pita 1/2 meter, lalu membeli lagi 1/4 meter dan 1/8 meter. Jumlah pita Ani adalah ....', o: ['5/8 meter', '6/8 meter', '7/8 meter', '8/8 meter'], a: 2 },
+            { q: 'Hasil dari 7/8 − 1/4 − 1/8 adalah ....', o: ['1/4', '1/2', '5/8', '3/4'], a: 1 },
+            { q: 'Hasil dari 2 × 3/5 ÷ 2 adalah ....', o: ['1/5', '2/5', '3/5', '4/5'], a: 2 },
+            { q: 'Bentuk desimal dari 3/4 adalah ....', o: ['0,25', '0,5', '0,75', '0,8'], a: 2 },
+            { q: 'Urutan desimal dari yang terbesar adalah ....\n0,5 ; 0,7 ; 0,2 ; 0,9', o: ['0,2 ; 0,5 ; 0,7 ; 0,9', '0,9 ; 0,7 ; 0,5 ; 0,2', '0,7 ; 0,9 ; 0,5 ; 0,2', '0,9 ; 0,5 ; 0,7 ; 0,2'], a: 1 },
+            { q: 'Nilai x pada 245 + x = 500 adalah ....', o: ['245', '255', '265', '275'], a: 1 },
+            { q: 'Nilai n pada 12 × n = 144 adalah ....', o: ['10', '11', '12', '13'], a: 2 },
+            { q: 'Pola bilangan berikut:\n2, 4, 8, 16, ....\n\nBilangan selanjutnya adalah ....', o: ['18', '24', '30', '32'], a: 3 },
+            { q: 'Pola bilangan berikut:\n160, 80, 40, 20, ....\n\nBilangan selanjutnya adalah ....', o: ['5', '10', '15', '25'], a: 1 },
+            { q: 'Harga 3 buku adalah Rp18.000,00. Harga 1 buku adalah ....', o: ['Rp4.000,00', 'Rp5.000,00', 'Rp6.000,00', 'Rp7.000,00'], a: 2 },
+            { q: 'Sebuah persegi panjang memiliki panjang 12 cm dan lebar 8 cm. Luasnya adalah ....', o: ['20 cm²', '48 cm²', '96 cm²', '120 cm²'], a: 2 },
+            { q: 'Sebuah bangun gabungan memiliki sisi luar total 40 cm. Keliling bangun tersebut adalah ....', o: ['20 cm', '30 cm', '40 cm', '50 cm'], a: 2 },
+            { q: 'Luas gabungan bangun datar adalah ....', o: ['120 cm²', '140 cm²', '160 cm²', '180 cm²'], a: 2 },
+            { q: 'Jumlah sudut dalam segitiga adalah ....', o: ['90°', '180°', '270°', '360°'], a: 1 },
+            { q: 'Bangun ruang yang semua rusuknya sama panjang adalah ....', o: ['tabung', 'kerucut', 'balok', 'kubus'], a: 3 },
+            { q: 'Jaring-jaring yang dapat membentuk kubus terdiri dari ....', o: ['4 persegi', '5 persegi', '6 persegi', '8 persegi'], a: 2 },
+            { q: 'Bagian paling atas dari balok disebut ....', o: ['sisi atas', 'sisi depan', 'sisi samping', 'sisi belakang'], a: 0 },
+            { q: 'Bangun datar yang memiliki dua pasang sisi sejajar adalah ....', o: ['segitiga', 'persegi panjang', 'lingkaran', 'layang-layang'], a: 1 },
+            { q: 'Bangun ruang yang memiliki 6 sisi berbentuk persegi panjang adalah ....', o: ['kubus', 'balok', 'kerucut', 'tabung'], a: 1 },
+            { q: 'Pada peta berpetak, sekolah berada di kolom B baris 3. Lokasi sekolah adalah ....', o: ['A3', 'B2', 'B3', 'C3'], a: 2 },
+            { q: 'Data tinggi badan siswa paling tepat disajikan dalam bentuk ....', o: ['diagram batang', 'cerita', 'paragraf', 'gambar bebas'], a: 0 },
+            { q: 'Diagram batang digunakan untuk ....', o: ['menghitung luas', 'menunjukkan data', 'menghitung keliling', 'mencari sudut'], a: 1 },
+            { q: 'Dalam kantong terdapat 5 bola merah dan 2 bola biru. Bola yang kemungkinan paling besar terambil adalah ....', o: ['bola biru', 'bola merah', 'keduanya sama', 'tidak mungkin diambil'], a: 1 },
+            { q: 'Tiga anak berolahraga setiap 6 hari, 8 hari, dan 12 hari sekali. Jika hari ini mereka berolahraga bersama, berapa hari lagi mereka akan berolahraga bersama kembali?', essay: true, sample: 'KPK dari 6, 8, dan 12 adalah 24. Jadi mereka akan berolahraga bersama lagi 24 hari kemudian.' },
+            { q: 'Sebuah mobil menempuh jarak 180 km dalam waktu 3 jam. Berapa km jarak yang ditempuh mobil setiap jam?', essay: true, sample: '180 ÷ 3 = 60 km/jam.' },
+            { q: 'Sebuah persegi memiliki panjang sisi 15 cm. Hitunglah keliling persegi tersebut!', essay: true, sample: 'Keliling persegi = 4 × 15 = 60 cm.' },
+            { q: 'Film dimulai pukul 08.15 dan selesai pukul 10.45. Berapa lama durasi film tersebut?', essay: true, sample: 'Durasi film = 2 jam 30 menit.' },
+            { q: 'Data jumlah buku yang dibaca siswa:\n2, 3, 2, 4, 5, 3, 4, 2\n\nSajikan data tersebut ke dalam bentuk tabel!', essay: true, sample: 'Jumlah Buku 2: Frekuensi 3, Jumlah Buku 3: Frekuensi 2, Jumlah Buku 4: Frekuensi 2, Jumlah Buku 5: Frekuensi 1.' }
+        ];
+
+        let current = 0, answers = new Array(40).fill(null), submitted = false;
+        const labels = ['A', 'B', 'C', 'D'];
+
+        function startQuiz() {
+            const name = document.getElementById('student-name').value.trim();
+            const school = document.getElementById('student-school').value.trim();
+            if (!name || !school) { document.getElementById('form-error').classList.remove('hidden'); return; }
+            document.getElementById('form-error').classList.add('hidden');
+            document.getElementById('student-form').classList.add('hidden');
+            document.getElementById('quiz-area').classList.remove('hidden');
+            document.getElementById('student-info-display').textContent = `${name} — ${school}`;
+            render();
+        }
+
+        function render() {
+            const q = questions[current];
+            const isEssay = !!q.essay;
+            document.getElementById('question-number').textContent = isEssay ? `Uraian ${current - 34}/5` : `Pilihan Ganda ${current + 1}/35`;
+            document.getElementById('question-text').textContent = q.q;
+            document.getElementById('progress-bar').style.width = ((current + 1) / 40 * 100) + '%';
+            document.getElementById('progress-text').textContent = `${current + 1}/40`;
+
+            const optC = document.getElementById('options-container');
+            const essayIn = document.getElementById('essay-input');
+            const explPanel = document.getElementById('explanation-panel');
+
+            if (isEssay) {
+                optC.classList.add('hidden'); essayIn.classList.remove('hidden');
+                essayIn.value = answers[current] || ''; essayIn.disabled = submitted;
+                if (submitted) {
+                    essayIn.value = answers[current] || '(Tidak dijawab)';
+                    explPanel.classList.remove('hidden');
+                    explPanel.className = 'mt-4 p-4 rounded-lg border-l-4 bg-blue-50 border-blue-500';
+                    document.getElementById('answer-status').textContent = '📝 Soal Uraian';
+                    document.getElementById('answer-status').className = 'text-sm font-semibold mb-2 text-blue-700';
+                    document.getElementById('explanation-text').textContent = 'Contoh jawaban: ' + q.sample;
+                } else { explPanel.classList.add('hidden'); }
+            } else {
+                essayIn.classList.add('hidden'); optC.classList.remove('hidden'); optC.innerHTML = '';
+                q.o.forEach((opt, i) => {
+                    const btn = document.createElement('button'); btn.type = 'button';
+                    let cls = 'option-btn w-full text-left p-3 mb-2 border-2 rounded-lg flex items-start gap-3';
+                    if (submitted) {
+                        if (i === q.a) cls += ' correct';
+                        else if (answers[current] === i) cls += ' wrong';
+                        btn.disabled = true;
+                    } else if (answers[current] === i) cls += ' selected';
+                    btn.className = cls;
+                    btn.innerHTML = `<span class="font-semibold text-gray-500 min-w-[24px]">${labels[i]}.</span><span>${opt}</span>`;
+                    if (!submitted) btn.onclick = () => { answers[current] = i; render(); document.getElementById('answer-error').classList.add('hidden'); };
+                    optC.appendChild(btn);
+                });
+                if (submitted) {
+                    explPanel.classList.remove('hidden');
+                    const isCorrect = answers[current] === q.a;
+                    explPanel.className = isCorrect ? 'mt-4 p-4 rounded-lg border-l-4 bg-green-50 border-green-500' : 'mt-4 p-4 rounded-lg border-l-4 bg-red-50 border-red-500';
+                    document.getElementById('answer-status').textContent = isCorrect ? '✓ Jawaban Benar' : '✗ Jawaban Salah';
+                    document.getElementById('answer-status').className = isCorrect ? 'text-sm font-semibold mb-2 text-green-700' : 'text-sm font-semibold mb-2 text-red-700';
+                    document.getElementById('explanation-text').textContent = 'Jawaban yang benar adalah: ' + labels[q.a] + '. ' + q.o[q.a];
+                } else { explPanel.classList.add('hidden'); }
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            const subBtn = document.getElementById('submit-btn');
+            if (current === 39) { nextBtn.classList.add('hidden'); if (!submitted) subBtn.classList.remove('hidden'); else subBtn.classList.add('hidden'); }
+            else { nextBtn.classList.remove('hidden'); subBtn.classList.add('hidden'); }
+        }
+
+        function navigate() {
+            saveEssay();
+            const q = questions[current];
+            if (q.essay) { if (!document.getElementById('essay-input').value.trim()) { document.getElementById('answer-error').classList.remove('hidden'); return; } }
+            else { if (answers[current] === null) { document.getElementById('answer-error').classList.remove('hidden'); return; } }
+            document.getElementById('answer-error').classList.add('hidden');
+            current = Math.min(39, current + 1); render();
+        }
+
+        function saveEssay() { if (questions[current].essay) { const v = document.getElementById('essay-input').value.trim(); answers[current] = v || null; } }
+
+        function submitQuiz() {
+            saveEssay();
+            const q = questions[current];
+            if (q.essay && !document.getElementById('essay-input').value.trim()) { document.getElementById('answer-error').classList.remove('hidden'); return; }
+            if (!q.essay && answers[current] === null) { document.getElementById('answer-error').classList.remove('hidden'); return; }
+            submitted = true;
+            let correct = 0; for (let i = 0; i < 35; i++) { if (answers[i] === questions[i].a) correct++; }
+            const score = Math.round(correct / 35 * 100);
+            document.getElementById('score-display').textContent = score + ' / 100';
+            document.getElementById('score-detail').textContent = `Benar: ${correct}/35 soal pilihan ganda. Soal uraian dinilai oleh guru.`;
+            document.getElementById('result-panel').classList.remove('hidden');
+            document.getElementById('submit-btn').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+            render();
+        }
+
+        function resetQuiz() {
+            submitted = false; current = 0; answers = new Array(40).fill(null);
+            document.getElementById('result-panel').classList.add('hidden');
+            document.getElementById('quiz-area').classList.add('hidden');
+            document.getElementById('student-form').classList.remove('hidden');
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-school').value = '';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9f8c1a78e224df0c',t:'MTc3ODI4MTQ2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
