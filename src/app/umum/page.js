@@ -351,10 +351,9 @@ export default function UmumPage() {
     window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
   };
 
-  const resetQuiz = () => {
+  const handleChangeSubject = () => {
     localStorage.removeItem('current_quiz_state_umum');
     setStarted(false);
-    setStudent({ name: '', school: '' });
     setSubject(null);
     setCurrent(0);
     setAnswers([]);
@@ -363,6 +362,7 @@ export default function UmumPage() {
     setError('');
     setActiveQuestions([]);
     setShowReview(false);
+    setApiScore(null);
     playSound('click');
   };
 
@@ -673,8 +673,8 @@ export default function UmumPage() {
                 <button className={styles.button} onClick={handleRetry}>
                   <RefreshCw size={18} /> Coba Lagi
                 </button>
-                <button className={styles.button} onClick={resetQuiz} style={{ background: 'rgba(255, 74, 74, 0.1)', color: '#ff4a4a', border: '1px solid rgba(255, 74, 74, 0.2)' }}>
-                  <Lock size={18} /> Selesai & Ganti Siswa
+                <button className={styles.button} onClick={handleChangeSubject} style={{ background: 'rgba(255, 74, 74, 0.1)', color: '#ff4a4a', border: '1px solid rgba(255, 74, 74, 0.2)' }}>
+                  <Lock size={18} /> Ganti Pelajaran
                 </button>
               </div>
 
