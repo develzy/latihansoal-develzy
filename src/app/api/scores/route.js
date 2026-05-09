@@ -8,7 +8,7 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const pass = searchParams.get('pass');
 
-  if (pass !== 'guru123') {
+  if (pass !== 'Guruberprestasi25') {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
   }
 
