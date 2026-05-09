@@ -10,6 +10,7 @@ import { ppknQuestions } from './data/ppkn';
 import { englishQuestions } from './data/english';
 import { jawaQuestions } from './data/jawa';
 import { pjokQuestions } from './data/pjok';
+import { ipasQuestions } from './data/ipas';
 
 
 
@@ -154,6 +155,7 @@ export default function Home() {
     if (subject === 'english') return 'Bahasa Inggris';
     if (subject === 'jawa') return 'Bahasa Jawa';
     if (subject === 'pjok') return 'PJOK';
+    if (subject === 'ipas') return 'IPAS';
     return '';
   }, [subject]);
 
@@ -235,6 +237,7 @@ export default function Home() {
     else if (subject === 'english') qList = englishQuestions;
     else if (subject === 'jawa') qList = jawaQuestions;
     else if (subject === 'pjok') qList = pjokQuestions;
+    else if (subject === 'ipas') qList = ipasQuestions;
 
     setActiveQuestions(qList);
     setAnswers(new Array(qList.length).fill(null));
@@ -413,6 +416,7 @@ export default function Home() {
                     <li onClick={() => { setSubject('english'); setIsDropdownOpen(false); }}>5. B. INGGRIS</li>
                     <li onClick={() => { setSubject('jawa'); setIsDropdownOpen(false); }}>6. B. JAWA</li>
                     <li onClick={() => { setSubject('pjok'); setIsDropdownOpen(false); }}>7. PJOK</li>
+                    <li onClick={() => { setSubject('ipas'); setIsDropdownOpen(false); }}>8. IPAS</li>
                   </ul>
                 )}
               </div>
