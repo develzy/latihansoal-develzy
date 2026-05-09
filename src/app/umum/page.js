@@ -94,6 +94,7 @@ export default function UmumPage() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSchoolDropdownOpen, setIsSchoolDropdownOpen] = useState(false);
   const [isSchoolSelected, setIsSchoolSelected] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [answers, setAnswers] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -421,19 +422,48 @@ export default function UmumPage() {
               
               <div className={styles.formGroup}>
                 <label className={styles.label}>Pilih Sekolah Anda</label>
-                <input
-                  type="text"
-                  list="schools-list"
-                  className={styles.input}
-                  value={student.school}
-                  onChange={(e) => setStudent({ ...student, school: e.target.value })}
-                  placeholder="Ketik atau pilih sekolah"
-                />
-                <datalist id="schools-list">
-                  {schools.map((sch, i) => (
-                    <option key={i} value={sch} />
-                  ))}
-                </datalist>
+                <div className={styles.dropdown}>
+                  <div 
+                    className={styles.dropdownHeader} 
+                    onClick={() => setIsSchoolDropdownOpen(!isSchoolDropdownOpen)}
+                  >
+                    <span>{student.school || 'Pilih Sekolah'}</span>
+                    <ChevronDown size={18} className={isSchoolDropdownOpen ? styles.rotate : ''} />
+                  </div>
+                  {isSchoolDropdownOpen && (
+                    <ul className={styles.dropdownList}>
+                      <li style={{ padding: '0.5rem 1rem', cursor: 'default' }}>
+                        <input
+                          type="text"
+                          className={styles.input}
+                          placeholder="Cari sekolah..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          onClick={(e) => e.stopPropagation()} 
+                          style={{ width: '100%', marginBottom: '0.5rem' }}
+                        />
+                      </li>
+                      {schools
+                        .filter(sch => sch.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .map((sch, i) => (
+                          <li 
+                            key={i} 
+                            onClick={() => { 
+                              setStudent({ ...student, school: sch }); 
+                              setIsSchoolDropdownOpen(false); 
+                              setSearchQuery('');
+                            }}
+                          >
+                            {sch}
+                          </li>
+                        ))
+                      }
+                      {schools.filter(sch => sch.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
+                        <li style={{ color: '#8b949e', cursor: 'default' }}>Sekolah tidak ditemukan</li>
+                      )}
+                    </ul>
+                  )}
+                </div>
               </div>
 
               {error && <p style={{ color: 'var(--danger-color)', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</p>}
