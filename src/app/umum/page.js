@@ -103,7 +103,47 @@ export default function UmumPage() {
   const [history, setHistory] = useState([]);
 
   const labels = ['A', 'B', 'C', 'D'];
-  const schools = ['SDN 02 KALISALAK', 'SDN 03 KALISALAK', 'SDN 01 CONTOH', 'Umum'];
+  const schools = [
+    'SD Negeri Margasari 01',
+    'SD Negeri Margasari 02',
+    'SD Negeri Margasari 03',
+    'SD Negeri Margasari 04',
+    'SD Negeri Margasari 05',
+    'SD Negeri Margasari 06',
+    'SD Negeri Margasari 07',
+    'SD Negeri Marga Ayu',
+    'SD Negeri Danaraja 01',
+    'SD Negeri Danaraja 02',
+    'SD Negeri Danaraja 03',
+    'SD Negeri Danaraja 04',
+    'SD Negeri Jatilaba 01',
+    'SD Negeri Jatilaba 02',
+    'SD Negeri Jatilaba 03',
+    'SD Negeri Jembayat 01',
+    'SD Negeri Jembayat 02',
+    'SD Negeri Jembayat 03',
+    'SD Negeri Kaligayam 01',
+    'SD Negeri Kaligayam 02',
+    'SD Negeri Kaligayam 03',
+    'SD Negeri Kalisalak 02',
+    'SD Negeri Karangdawa 01',
+    'SD Negeri Karangdawa 02',
+    'SD Negeri Karangdawa 03',
+    'SD Negeri Karangdawa 04',
+    'SD Negeri Pakulaut 01',
+    'SD Negeri Pakulaut 02',
+    'SD Negeri Pakulaut 03',
+    'SD Negeri Pakulaut 04',
+    'SD Negeri Prupuk Selatan 01',
+    'SD Negeri Prupuk Selatan 02',
+    'SD Negeri Prupuk Selatan 03',
+    'SD Negeri Prupuk Utara 01',
+    'SD Negeri Prupuk Utara 02',
+    'SD Negeri Wanasari 01',
+    'SD Negeri Wanasari 02',
+    'SD Negeri Wanasari 03',
+    'SD Negeri Wanasari 04'
+  ];
 
   // Load state on mount
   useEffect(() => {
@@ -379,22 +419,19 @@ export default function UmumPage() {
             
             <div className={styles.formGroup}>
               <label className={styles.label}>Pilih Sekolah</label>
-              <div className={styles.dropdown}>
-                <div 
-                  className={styles.dropdownHeader} 
-                  onClick={() => setIsSchoolDropdownOpen(!isSchoolDropdownOpen)}
-                >
-                  <span>{student.school || 'Pilih Sekolah'}</span>
-                  <ChevronDown size={18} className={isSchoolDropdownOpen ? styles.rotate : ''} />
-                </div>
-                {isSchoolDropdownOpen && (
-                  <ul className={styles.dropdownList}>
-                    {schools.map((sch, i) => (
-                      <li key={i} onClick={() => { setStudent({ ...student, school: sch }); setIsSchoolDropdownOpen(false); }}>{sch}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              <input
+                type="text"
+                list="schools-list"
+                className={styles.input}
+                value={student.school}
+                onChange={(e) => setStudent({ ...student, school: e.target.value })}
+                placeholder="Ketik atau pilih sekolah"
+              />
+              <datalist id="schools-list">
+                {schools.map((sch, i) => (
+                  <option key={i} value={sch} />
+                ))}
+              </datalist>
             </div>
 
             <div className={styles.formGroup}>
