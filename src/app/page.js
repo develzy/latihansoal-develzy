@@ -11,6 +11,7 @@ import { englishQuestions } from './data/english';
 import { jawaQuestions } from './data/jawa';
 import { pjokQuestions } from './data/pjok';
 import { ipasQuestions } from './data/ipas';
+import { sbdpQuestions } from './data/sbdp';
 
 
 
@@ -156,6 +157,7 @@ export default function Home() {
     if (subject === 'jawa') return 'Bahasa Jawa';
     if (subject === 'pjok') return 'PJOK';
     if (subject === 'ipas') return 'IPAS';
+    if (subject === 'sbdp') return 'SBdP';
     return '';
   }, [subject]);
 
@@ -238,6 +240,7 @@ export default function Home() {
     else if (subject === 'jawa') qList = jawaQuestions;
     else if (subject === 'pjok') qList = pjokQuestions;
     else if (subject === 'ipas') qList = ipasQuestions;
+    else if (subject === 'sbdp') qList = sbdpQuestions;
 
     setActiveQuestions(qList);
     setAnswers(new Array(qList.length).fill(null));
@@ -417,6 +420,7 @@ export default function Home() {
                     <li onClick={() => { setSubject('jawa'); setIsDropdownOpen(false); }}>6. B. JAWA</li>
                     <li onClick={() => { setSubject('pjok'); setIsDropdownOpen(false); }}>7. PJOK</li>
                     <li onClick={() => { setSubject('ipas'); setIsDropdownOpen(false); }}>8. IPAS</li>
+                    <li onClick={() => { setSubject('sbdp'); setIsDropdownOpen(false); }}>9. SBdP</li>
                   </ul>
                 )}
               </div>
