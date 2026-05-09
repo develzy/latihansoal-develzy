@@ -176,6 +176,49 @@ const ppknQuestions = [
   { q: 'Tuliskan manfaat musyawarah dalam kehidupan sehari-hari!', essay: true, sample: 'Mempererat persatuan\nMendapat keputusan bersama\nMenghindari pertengkaran', expl: 'Musyawarah menghasilkan mufakat yang adil bagi semua pihak dan mencegah terjadinya konflik.' }
 ];
 
+const englishQuestions = [
+  { q: 'My father is a doctor. He works in a ....', o: ['school', 'market', 'hospital', 'library'], a: 2, expl: 'A doctor works in a hospital.' },
+  { q: '“She is my mother’s sister.”\n\nShe is my ....', o: ['cousin', 'aunt', 'grandmother', 'niece'], a: 1, expl: 'Mother\'s sister is an aunt.' },
+  { q: 'I usually go to school .... 07.00 a.m.', o: ['in', 'on', 'at', 'under'], a: 2, expl: 'We use "at" for specific times.' },
+  { q: 'The opposite of “big” is ....', o: ['tall', 'small', 'short', 'long'], a: 1, expl: 'The opposite of big is small.' },
+  { q: 'There are seven days in a ....', o: ['month', 'year', 'week', 'day'], a: 2, expl: 'A week has 7 days.' },
+  { q: 'We use our eyes to ....', o: ['hear', 'smell', 'see', 'touch'], a: 2, expl: 'Eyes are used for seeing.' },
+  { q: 'The cat is .... the table.', o: ['in', 'on', 'under', 'behind'], a: 1, expl: 'Based on the answer key, the answer is B (on).' },
+  { q: 'Rina : “How are you?”\nSinta : “....”', o: ['Goodbye', 'Thank you', 'I am fine', 'See you'], a: 2, expl: 'The correct response to "How are you?" is "I am fine".' },
+  { q: 'Which one is a fruit?', o: ['carrot', 'potato', 'mango', 'cabbage'], a: 2, expl: 'Mango is a fruit.' },
+  { q: 'My classroom is clean and ....', o: ['dirty', 'comfortable', 'broken', 'noisy'], a: 1, expl: 'Clean and comfortable go together.' },
+  { q: 'The sun rises in the ....', o: ['west', 'north', 'east', 'south'], a: 2, expl: 'The sun rises in the east.' },
+  { q: 'I have two .... to write.', o: ['books', 'pencils', 'bags', 'rulers'], a: 1, expl: 'We use pencils to write.' },
+  { q: 'What color is the sky?', o: ['Green', 'Blue', 'Red', 'Black'], a: 1, expl: 'The sky is blue.' },
+  { q: 'The plural form of “child” is ....', o: ['childs', 'childrens', 'children', 'childes'], a: 2, expl: 'The plural of child is children.' },
+  { q: 'A lion is a .... animal.', o: ['wild', 'tame', 'small', 'weak'], a: 0, expl: 'A lion is a wild animal.' },
+  { q: 'We sleep in the ....', o: ['kitchen', 'bathroom', 'bedroom', 'garage'], a: 2, expl: 'We sleep in the bedroom.' },
+  { q: '“Thank you” means ....', o: ['sama-sama', 'maaf', 'terima kasih', 'permisi'], a: 2, expl: '"Thank you" means terima kasih.' },
+  { q: 'I .... football every Sunday.', o: ['play', 'plays', 'playing', 'played'], a: 0, expl: 'Subject "I" uses the base form of the verb in present tense.' },
+  { q: 'The month after June is ....', o: ['May', 'July', 'August', 'April'], a: 1, expl: 'July comes after June.' },
+  { q: 'There .... a book on the table.', o: ['are', 'am', 'is', 'be'], a: 2, expl: 'Singular subject "a book" uses "is".' },
+  { q: 'My teacher is very kind. She always helps her students.\n\nThe teacher is ....', o: ['lazy', 'friendly', 'angry', 'selfish'], a: 1, expl: 'Kind and helping students means friendly.' },
+  { q: 'Which one is transportation?', o: ['bicycle', 'spoon', 'pillow', 'pencil'], a: 0, expl: 'Bicycle is a form of transportation.' },
+  { q: 'We drink water when we are ....', o: ['hungry', 'thirsty', 'sleepy', 'angry'], a: 1, expl: 'We drink when thirsty.' },
+  { q: 'The Indonesian flag is ....', o: ['red and white', 'blue and white', 'red and blue', 'black and white'], a: 0, expl: 'Indonesian flag is red and white.' },
+  { q: 'A baker works in a ....', o: ['hospital', 'bakery', 'school', 'office'], a: 1, expl: 'A baker works in a bakery.' },
+  { q: 'How many days are there in a week?', o: ['five', 'six', 'seven', 'eight'], a: 2, expl: 'There are 7 days in a week.' },
+  { q: 'The opposite of “happy” is ....', o: ['excited', 'sad', 'hungry', 'funny'], a: 1, expl: 'The opposite of happy is sad.' },
+  { q: 'My brother .... TV every night.', o: ['watch', 'watches', 'watching', 'watched'], a: 1, expl: 'Third person singular "my brother" uses "watches".' },
+  { q: 'What is the meaning of “library”?', o: ['pasar', 'rumah sakit', 'perpustakaan', 'kantor'], a: 2, expl: 'Library means perpustakaan.' },
+  { q: 'We use our ears to ....', o: ['smell', 'hear', 'taste', 'touch'], a: 1, expl: 'Ears are used for hearing.' },
+  { q: 'The teacher writes on the ....', o: ['blackboard', 'window', 'door', 'chair'], a: 0, expl: 'Teachers write on the blackboard.' },
+  { q: 'A rabbit can ....', o: ['fly', 'swim', 'jump', 'climb'], a: 2, expl: 'Rabbits can jump.' },
+  { q: '“Good night” is used when ....', o: ['meeting someone in the morning', 'going to sleep', 'eating lunch', 'studying at school'], a: 1, expl: 'Good night is used before sleep.' },
+  { q: 'The correct spelling is ....', o: ['becouse', 'because', 'becaus', 'beacause'], a: 1, expl: 'The correct spelling is "because".' },
+  { q: 'My father and I .... to the market yesterday.', o: ['go', 'goes', 'went', 'going'], a: 2, expl: '"Yesterday" indicates past tense, so we use "went".' },
+  { q: 'Introduce yourself in English using 5 sentences!', essay: true, sample: 'My name is [Name]. I am [Age] years old. I live in [Address]. My hobby is [Hobby]. I study at [School].', expl: 'Introduce yourself with name, age, address, hobby, and school.' },
+  { q: 'Write 5 things that you can find in your classroom!', essay: true, sample: 'Table, chair, whiteboard, book, bag.', expl: 'List 5 items found in a classroom.' },
+  { q: 'Make 3 sentences about your daily activities!', essay: true, sample: 'I wake up at 5 a.m. I go to school every morning. I study with my friends at school.', expl: 'Write 3 sentences about daily routine.' },
+  { q: 'Translate into English!\n\na. Saya pergi ke sekolah setiap hari.\nb. Ibu saya memasak di dapur.\nc. Saya suka bermain sepak bola.', essay: true, sample: 'a. I go to school every day.\nb. My mother cooks in the kitchen.\nc. I like playing football.', expl: 'Translate the sentences correctly.' },
+  { q: 'Write a short paragraph about your best friend!', essay: true, sample: 'My best friend is very kind and friendly. We study and play together every day. He/She always helps me when I have problems. We like spending time together at school.', expl: 'Write a short paragraph about a friend.' }
+];
+
 const playSound = (type) => {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -333,6 +376,7 @@ export default function Home() {
     else if (subject === 'math') qList = mathQuestions;
     else if (subject === 'indo') qList = indoQuestions;
     else if (subject === 'ppkn') qList = ppknQuestions;
+    else if (subject === 'english') qList = englishQuestions;
 
     setActiveQuestions(qList);
     setAnswers(new Array(qList.length).fill(null));
@@ -492,6 +536,7 @@ export default function Home() {
     if (subject === 'math') return 'Matematika';
     if (subject === 'indo') return 'B. Indonesia';
     if (subject === 'ppkn') return 'PPKN';
+    if (subject === 'english') return 'Bahasa Inggris';
     return '';
   };
 
@@ -555,6 +600,12 @@ export default function Home() {
                   onClick={() => setSubject('ppkn')}
                 >
                   4. PPKN
+                </button>
+                <button
+                  className={`${styles.subjectBtn} ${subject === 'english' ? styles.selected : ''}`}
+                  onClick={() => setSubject('english')}
+                >
+                  5. B. INGGRIS
                 </button>
               </div>
             </div>
