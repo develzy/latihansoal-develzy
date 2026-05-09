@@ -38,6 +38,7 @@ export default function TeacherPage() {
     'SD Negeri Kaligayam 02',
     'SD Negeri Kaligayam 03',
     'SD Negeri Kalisalak 02',
+    'SD Negeri Kalisalak 03',
     'SD Negeri Karangdawa 01',
     'SD Negeri Karangdawa 02',
     'SD Negeri Karangdawa 03',
