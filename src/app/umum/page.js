@@ -744,7 +744,7 @@ export default function UmumPage() {
               <span className={styles.divider}>|</span>
               <a href="/teacher" className={styles.teacherLink}>Ruang Guru</a>
               <span className={styles.divider}>|</span>
-              <a href="https://wa.me/6285879584257" target="_blank" rel="noopener noreferrer" className={styles.teacherLink}>Mengalami Kendala?</a>
+              <a href={`https://wa.me/6285879584257?text=${encodeURIComponent("Assalamu'alaikum Wr. Wb.\n*WEB LATIHAN SOAL ASAJ*\nNama:\nKendala:\nSekolah:\n\nTerimakasih sudah mendukung kami")}`} target="_blank" rel="noopener noreferrer" className={styles.teacherLink}>Mengalami Kendala?</a>
             </div>
           </div>
         </div>
