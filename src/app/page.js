@@ -108,6 +108,7 @@ export default function Home() {
   const [activeQuestions, setActiveQuestions] = useState([]);
   const [lockedAnswers, setLockedAnswers] = useState([]);
   const [timeLeft, setTimeLeft] = useState(3600);
+  const [apiScore, setApiScore] = useState(null);
   const [showReview, setShowReview] = useState(false);
   const [history, setHistory] = useState([]);
 
@@ -185,7 +186,7 @@ export default function Home() {
         studentAnswer: answers[35 + i]
       }));
 
-      await fetch('/api/scores', {
+      const res = await fetch('/api/scores', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -195,6 +196,10 @@ export default function Home() {
           essayData: essayData
         })
       });
+      if (res.ok) {
+        const data = await res.json();
+        setApiScore(data.finalScore);
+      }
     } catch (err) {
       console.error('Gagal menyimpan nilai ke database:', err);
     }
@@ -339,6 +344,7 @@ export default function Home() {
     setLockedAnswers([]);
     setSubmitted(false);
     setError('');
+    setApiScore(null);
     setActiveQuestions([]);
     setShowReview(false);
     playSound('click');
@@ -563,10 +569,14 @@ export default function Home() {
                 <p><strong>Mata Pelajaran:</strong> {getSubjectName()}</p>
               </div>
 
-              <div className={styles.scoreDisplay}>{calculateScore()} / 100</div>
+              <div className={styles.scoreDisplay}>
+                {apiScore !== null ? apiScore : calculateScore()} / 100
+              </div>
 
               <p style={{ color: '#8b949e', marginBottom: '2rem' }}>
-                Skor di atas hanya berdasarkan soal pilihan ganda. Soal uraian akan dinilai oleh guru.
+                {apiScore !== null 
+                  ? "Skor di atas sudah termasuk penilaian otomatis oleh AI untuk soal uraian." 
+                  : "Skor di atas hanya berdasarkan soal pilihan ganda. Soal uraian akan dinilai oleh guru."}
               </p>
 
               <div className={styles.nav} style={{ justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
