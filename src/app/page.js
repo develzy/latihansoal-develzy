@@ -652,11 +652,13 @@ export default function Home() {
             &quot;Kami Selalu Tumbuh Bersama Inovasi dan Prestasi, menciptakan lingkungan belajar yang modern, inspiratif, dan penuh semangat untuk meraih masa depan gemilang.&quot;
           </p>
           <div className={styles.footerMeta}>
-            <p className={styles.copyright}>@2026 Powered by DEVELZY</p>
+            <p className={styles.copyright}>
+              <a href="https://wa.me/6285879584257" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>@2026 Powered by DEVELZY</a>
+            </p>
             <div className={styles.footerLinks}>
-              <span>Versi 2.0 | Mode Cerdas</span>
+              <span>Versi 1.2.5 | Mode Cerdas | Terintegritas Dengan AI</span>
               <span className={styles.divider}>|</span>
-              <a href="/teacher" className={styles.teacherLink}>Panel Guru</a>
+              <a href="/teacher" className={styles.teacherLink}>Ruang Guru</a>
             </div>
           </div>
         </div>
