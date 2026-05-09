@@ -56,14 +56,14 @@ export default function TeacherPage() {
   ];
 
   const handleLogin = async () => {
-    if (password === 'GuruUmum25' && !selectedSchool) {
+    if (password === 'guruumum25' && !selectedSchool) {
       setError('Harap pilih sekolah Anda.');
       return;
     }
     setLoading(true);
     setError('');
     try {
-      const url = password === 'GuruUmum25' 
+      const url = password === 'guruumum25' 
         ? `/api/scores?pass=${password}&school=${encodeURIComponent(selectedSchool)}`
         : `/api/scores?pass=${password}`;
       const res = await fetch(url);
@@ -85,7 +85,7 @@ export default function TeacherPage() {
   const refreshData = async () => {
     setLoading(true);
     try {
-      const url = password === 'GuruUmum25' 
+      const url = password === 'guruumum25' 
         ? `/api/scores?pass=${password}&school=${encodeURIComponent(selectedSchool)}`
         : `/api/scores?pass=${password}`;
       const res = await fetch(url);
@@ -110,7 +110,7 @@ export default function TeacherPage() {
           <div className={styles.headerText}>
             <h1 className={styles.title}>Panel Guru</h1>
             <p className={styles.subtitle}>
-              Rekap Nilai Siswa {password === 'GuruUmum25' ? (selectedSchool || 'Sekolah Umum') : 'SDN 01 KALISALAK'}
+              Rekap Nilai Siswa {password === 'guruumum25' ? (selectedSchool || 'Sekolah Umum') : 'SDN 01 KALISALAK'}
             </p>
           </div>
         </div>
@@ -149,7 +149,7 @@ export default function TeacherPage() {
             </div>
           </div>
 
-            {password === 'GuruUmum25' && (
+            {password === 'guruumum25' && (
               <div className={styles.formGroup} style={{ marginTop: '1rem' }}>
                 <label className={styles.label}>Pilih Sekolah Anda</label>
                 <div className={styles.dropdown}>

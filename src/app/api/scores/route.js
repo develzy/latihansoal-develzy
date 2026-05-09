@@ -4,8 +4,8 @@ export const runtime = 'edge';
 let localScores = [];
 
 const schoolPasswords = {
-  'Guruberprestasi25': 'SDN 01 KALISALAK',
-  'GuruUmum25': 'Umum'
+  'guruberprestasi25': 'SDN 01 KALISALAK',
+  'guruumum25': 'Umum'
 };
 
 // GET /api/scores

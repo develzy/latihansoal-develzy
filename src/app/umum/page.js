@@ -407,10 +407,10 @@ export default function UmumPage() {
 
       <div className={styles.marquee}>
         <div className={styles.marqueeInner}>
-          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG | [jika mengalami kendala atau ingin berkolaborasi dalam inovasi, hubungi kami]</span>
-          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG | [jika mengalami kendala atau ingin berkolaborasi dalam inovasi, hubungi kami]</span>
-          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG | [jika mengalami kendala atau ingin berkolaborasi dalam inovasi, hubungi kami]</span>
-          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG | [jika mengalami kendala atau ingin berkolaborasi dalam inovasi, hubungi kami]</span>
+          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG | SDN 01 KALISALAK [jika mengalami kendala atau ingin berkolaborasi dalam inovasi, hubungi kami]</span>
+          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG | SDN 01 KALISALAK [jika mengalami kendala atau ingin berkolaborasi dalam inovasi, hubungi kami]</span>
+          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG | SDN 01 KALISALAK [jika mengalami kendala atau ingin berkolaborasi dalam inovasi, hubungi kami]</span>
+          <span>WEB LATIHAN ASESMEN SUMATIF AKHIR JENJANG | SDN 01 KALISALAK [jika mengalami kendala atau ingin berkolaborasi dalam inovasi, hubungi kami]</span>
         </div>
       </div>
 
