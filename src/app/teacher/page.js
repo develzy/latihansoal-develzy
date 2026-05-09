@@ -122,7 +122,8 @@ export default function TeacherPage() {
 
       <footer className={styles.footer}>
         <div className={styles.footerLine}></div>
-        <p>Latihan Soal ASAJ By.DEVELZY</p>
+        <p>Asah Kemampuan, Raih Prestasi</p>
+        <p style={{ fontSize: '0.8rem', marginTop: '0.2rem', opacity: 0.7 }}>@2026 Powered by DEVELZY</p>
       </footer>
     </div>
   );
