@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import styles from './page.module.css';
-import { ChevronRight, Award, RefreshCw, BookOpen, Lock, Clock, Eye, Send, Trash2 } from 'lucide-react';
+import { ChevronRight, Award, RefreshCw, BookOpen, Lock, Clock, Eye, Send, Trash2, ChevronDown } from 'lucide-react';
 import { paiQuestions } from './data/pai';
 import { mathQuestions } from './data/math';
 import { indoQuestions } from './data/indo';
@@ -98,6 +98,7 @@ export default function Home() {
   const [student, setStudent] = useState({ name: '', school: 'SDN 01 KALISALAK' }); // Default school
   const [subject, setSubject] = useState(null);
   const [current, setCurrent] = useState(0);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -383,43 +384,24 @@ export default function Home() {
 
             <div className={styles.formGroup}>
               <label className={styles.label}>Pilih Mata Pelajaran</label>
-              <div className={styles.subjectGrid}>
-                <button
-                  className={`${styles.subjectBtn} ${subject === 'pai' ? styles.selected : ''}`}
-                  onClick={() => setSubject('pai')}
+              <div className={styles.dropdown}>
+                <div 
+                  className={styles.dropdownHeader} 
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  1. PAI-BP
-                </button>
-                <button
-                  className={`${styles.subjectBtn} ${subject === 'math' ? styles.selected : ''}`}
-                  onClick={() => setSubject('math')}
-                >
-                  2. MATEMATIKA
-                </button>
-                <button
-                  className={`${styles.subjectBtn} ${subject === 'indo' ? styles.selected : ''}`}
-                  onClick={() => setSubject('indo')}
-                >
-                  3. B. INDONESIA
-                </button>
-                <button
-                  className={`${styles.subjectBtn} ${subject === 'ppkn' ? styles.selected : ''}`}
-                  onClick={() => setSubject('ppkn')}
-                >
-                  4. PPKN
-                </button>
-                <button
-                  className={`${styles.subjectBtn} ${subject === 'english' ? styles.selected : ''}`}
-                  onClick={() => setSubject('english')}
-                >
-                  5. B. INGGRIS
-                </button>
-                <button
-                  className={`${styles.subjectBtn} ${subject === 'jawa' ? styles.selected : ''}`}
-                  onClick={() => setSubject('jawa')}
-                >
-                  6. B. JAWA
-                </button>
+                  <span>{subject ? getSubjectName() : 'Pilih Mata Pelajaran'}</span>
+                  <ChevronDown size={18} className={isDropdownOpen ? styles.rotate : ''} />
+                </div>
+                {isDropdownOpen && (
+                  <ul className={styles.dropdownList}>
+                    <li onClick={() => { setSubject('pai'); setIsDropdownOpen(false); }}>1. PAI-BP</li>
+                    <li onClick={() => { setSubject('math'); setIsDropdownOpen(false); }}>2. MATEMATIKA</li>
+                    <li onClick={() => { setSubject('indo'); setIsDropdownOpen(false); }}>3. B. INDONESIA</li>
+                    <li onClick={() => { setSubject('ppkn'); setIsDropdownOpen(false); }}>4. PPKN</li>
+                    <li onClick={() => { setSubject('english'); setIsDropdownOpen(false); }}>5. B. INGGRIS</li>
+                    <li onClick={() => { setSubject('jawa'); setIsDropdownOpen(false); }}>6. B. JAWA</li>
+                  </ul>
+                )}
               </div>
             </div>
 
