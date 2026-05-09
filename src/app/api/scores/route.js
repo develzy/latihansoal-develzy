@@ -32,14 +32,14 @@ export async function GET(request) {
     const requestedSchool = searchParams.get('school');
     if (school === 'Umum') {
       if (requestedSchool) {
-        const query = await db.prepare("SELECT * FROM scores WHERE school = ? ORDER BY id DESC").all(requestedSchool);
+        const query = await db.prepare("SELECT * FROM scores WHERE school = ? ORDER BY id DESC").bind(requestedSchool).all();
         results = query.results;
       } else {
         const query = await db.prepare("SELECT * FROM scores WHERE school != 'SDN 01 KALISALAK' OR school IS NULL ORDER BY id DESC").all();
         results = query.results;
       }
     } else {
-      const query = await db.prepare("SELECT * FROM scores WHERE school = ? ORDER BY id DESC").all(school);
+      const query = await db.prepare("SELECT * FROM scores WHERE school = ? ORDER BY id DESC").bind(school).all();
       results = query.results;
     }
     return Response.json(results);
