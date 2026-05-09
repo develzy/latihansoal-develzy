@@ -8,6 +8,7 @@ import { mathQuestions } from './data/math';
 import { indoQuestions } from './data/indo';
 import { ppknQuestions } from './data/ppkn';
 import { englishQuestions } from './data/english';
+import { jawaQuestions } from './data/jawa';
 
 
 
@@ -149,6 +150,7 @@ export default function Home() {
     if (subject === 'indo') return 'B. Indonesia';
     if (subject === 'ppkn') return 'PPKN';
     if (subject === 'english') return 'Bahasa Inggris';
+    if (subject === 'jawa') return 'Bahasa Jawa';
     return '';
   }, [subject]);
 
@@ -228,6 +230,7 @@ export default function Home() {
     else if (subject === 'indo') qList = indoQuestions;
     else if (subject === 'ppkn') qList = ppknQuestions;
     else if (subject === 'english') qList = englishQuestions;
+    else if (subject === 'jawa') qList = jawaQuestions;
 
     setActiveQuestions(qList);
     setAnswers(new Array(qList.length).fill(null));
@@ -410,6 +413,12 @@ export default function Home() {
                   onClick={() => setSubject('english')}
                 >
                   5. B. INGGRIS
+                </button>
+                <button
+                  className={`${styles.subjectBtn} ${subject === 'jawa' ? styles.selected : ''}`}
+                  onClick={() => setSubject('jawa')}
+                >
+                  6. B. JAWA
                 </button>
               </div>
             </div>
